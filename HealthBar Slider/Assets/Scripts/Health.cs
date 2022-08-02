@@ -3,7 +3,8 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private int _maxHealth;
-    [SerializeField] private HealthBarRenderer _renderer;
+    [SerializeField] private int _changeHealthValue = 10;
+    [SerializeField] private HealthBar _healthBar;
     [SerializeField] private HitButton _hitButton;
     [SerializeField] private HealButton _healButton;
 
@@ -25,15 +26,15 @@ public class Health : MonoBehaviour
 
     private void TakeDamage()
     {
-        _renderer.ReduceHealthRenderer();
+        _healthBar.ReduceHealth();
 
-        _currentHealth -= 10;         
+        _currentHealth -= _changeHealthValue;         
     }
 
     private void Recover()
     {
-        _renderer.IncreaseHealthRenderer();
+        _healthBar.IncreaseHealth();
 
-        _currentHealth += 10;
+        _currentHealth += _changeHealthValue;
     }
 }
