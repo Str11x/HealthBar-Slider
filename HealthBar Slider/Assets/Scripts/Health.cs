@@ -4,37 +4,24 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private int _maxHealth;
     [SerializeField] private int _changeHealthValue = 10;
-    [SerializeField] private HealthBar _healthBar;
-    [SerializeField] private HitButton _hitButton;
-    [SerializeField] private HealButton _healButton;
 
-    private int _currentHealth;
+    private int _minHealth = 0;
+    public int CurrentHealth { get; private set; }
 
     private void Start()
     {
-        _hitButton.Hitted += TakeDamage;
-        _healButton.Healed += Recover;
-
-        _currentHealth = _maxHealth;
+        CurrentHealth = _maxHealth;
     }
 
-    private void OnDisable()
+    public void TakeDamage()
     {
-        _hitButton.Hitted -= TakeDamage;
-        _healButton.Healed -= Recover;
+        if(CurrentHealth != _minHealth)
+            CurrentHealth -= _changeHealthValue;         
     }
 
-    private void TakeDamage()
+    public void Recover()
     {
-        _healthBar.ReduceHealth();
-
-        _currentHealth -= _changeHealthValue;         
-    }
-
-    private void Recover()
-    {
-        _healthBar.IncreaseHealth();
-
-        _currentHealth += _changeHealthValue;
+        if (CurrentHealth != _maxHealth)
+            CurrentHealth += _changeHealthValue;
     }
 }
