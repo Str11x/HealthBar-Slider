@@ -15,13 +15,17 @@ public class Health : MonoBehaviour
 
     public void TakeDamage()
     {
-        if(CurrentHealth != _minHealth)
-            CurrentHealth -= _changeHealthValue;         
+        if (CurrentHealth - _changeHealthValue >= _minHealth)
+            CurrentHealth -= _changeHealthValue;
+        else
+            Debug.Log("YOU DIED");
     }
 
     public void Recover()
     {
-        if (CurrentHealth != _maxHealth)
+        if (CurrentHealth + _changeHealthValue <= _maxHealth)
             CurrentHealth += _changeHealthValue;
+        else
+            Debug.Log("YOU HAVE FULL HP BAR");
     }
 }

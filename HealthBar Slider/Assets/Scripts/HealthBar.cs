@@ -10,6 +10,7 @@ public class HealthBar : MonoBehaviour
 
     private Slider _healthSlider;
     private Coroutine _changeHealthValue;
+    private WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
 
     private float _target;
     private float _currentVelocity = 0;
@@ -21,7 +22,7 @@ public class HealthBar : MonoBehaviour
         _target = _healthSlider.value;
     }
 
-    public void UpdateHealthValue()
+    public void UpdateBar()
     {
         _target = _health.CurrentHealth;
 
@@ -38,7 +39,7 @@ public class HealthBar : MonoBehaviour
             float currentValue = Mathf.SmoothDamp(_healthSlider.value, _target, ref _currentVelocity, _changeSpeed * Time.deltaTime);
             _healthSlider.value = currentValue;
 
-            yield return new WaitForFixedUpdate();
+            yield return _waitForFixedUpdate;
         }
     }
 }
