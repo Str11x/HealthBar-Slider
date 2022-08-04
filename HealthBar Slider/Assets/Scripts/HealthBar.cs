@@ -17,9 +17,16 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
+        _health.ChangedAmountOfHealth += UpdateBar;
+
         _healthSlider = GetComponent<Slider>();
  
         _target = _healthSlider.value;
+    }
+
+    private void OnDisable()
+    {
+        _health.ChangedAmountOfHealth -= UpdateBar;
     }
 
     public void UpdateBar()

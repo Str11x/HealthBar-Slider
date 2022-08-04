@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int _maxHealth;
+    [SerializeField] private float _maxHealth;
     [SerializeField] private int _changeHealthValue = 10;
 
-    private int _minHealth = 0;
-    public int CurrentHealth { get; private set; }
+    private float _minHealth = 0;
+    public float CurrentHealth { get; private set; }
+
+    public event Action ChangedAmountOfHealth;
 
     private void Start()
     {
@@ -15,17 +18,15 @@ public class Health : MonoBehaviour
 
     public void TakeDamage()
     {
-        if (CurrentHealth - _changeHealthValue >= _minHealth)
-            CurrentHealth -= _changeHealthValue;
-        else
-            Debug.Log("YOU DIED");
+        CurrentHealth = Mathf.Clamp(CurrentHealth - _changeHealthValue, _minHealth, _maxHealth);
+
+        ChangedAmountOfHealth?.Invoke();
     }
 
     public void Recover()
     {
-        if (CurrentHealth + _changeHealthValue <= _maxHealth)
-            CurrentHealth += _changeHealthValue;
-        else
-            Debug.Log("YOU HAVE FULL HP BAR");
+        CurrentHealth = Mathf.Clamp(CurrentHealth + _changeHealthValue, _minHealth, _maxHealth);
+
+        ChangedAmountOfHealth?.Invoke();
     }
 }
